@@ -175,7 +175,7 @@ class Device(object):
         property_names = {"device_properties": ["added_properties"]}
         )
     def __init__(self,name,parent_device,connection, call_parents_add_device=True, 
-                 added_properties = {}, **kwargs):
+                 added_properties = {}, remote_device = None, **kwargs):
         # Verify that no invalid kwargs were passed and the set properties
         if len(kwargs) != 0:        
             raise LabscriptError('Invalid keyword arguments: %s.'%kwargs)
@@ -223,6 +223,9 @@ class Device(object):
         
         # Add self to the compiler's device inventory
         compiler.inventory.append(self)
+        
+        # remote process server connection properties
+        self.set_property('remote_device', remote_device, location='connection_table_properties')
             
     
     # Method to set a property for this device. 
